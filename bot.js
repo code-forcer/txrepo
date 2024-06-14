@@ -1,6 +1,21 @@
 const { Telegraf, Markup } = require('telegraf');
-const bot = new Telegraf('7219262786:AAFLOQQ-ugSc2_t9Z7tsmQk5eTgosA5UF_M');
+const express = require('express');
+const bodyParser = require('body-parser');
 
+const BOT_TOKEN = '7219262786:AAFLOQQ-ugSc2_t9Z7tsmQk5eTgosA5UF_M';
+const PORT = process.env.PORT || 3000;
+
+const bot = new Telegraf(BOT_TOKEN);
+const app = express();
+
+app.use(bodyParser.json());
+
+// Webhook setup
+const WEBHOOK_PATH = `/bot${BOT_TOKEN}`;
+const WEBHOOK_URL = `https://your-render-domain.onrender.com${WEBHOOK_PATH}`;
+
+bot.telegram.setWebhook(WEBHOOK_URL);
+app.use(bot.webhookCallback(WEBHOOK_PATH));
 // Site URL
 const siteUrl = 'https://txclub.netlify.app/';
 
@@ -79,4 +94,8 @@ bot.command('about', (ctx) => {
     );
 });
 
-bot.launch();
+bot.launch();// Launch the Express server
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
