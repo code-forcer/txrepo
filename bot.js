@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 // Webhook setup
 const WEBHOOK_PATH = `/bot${BOT_TOKEN}`;
-const WEBHOOK_URL = `https://txrepo.onrender.com${WEBHOOK_PATH}`;
+const WEBHOOK_URL = `https://trepobot.netlify.app${WEBHOOK_PATH}`;
 
 bot.telegram.setWebhook(WEBHOOK_URL);
 app.use(bot.webhookCallback(WEBHOOK_PATH));
